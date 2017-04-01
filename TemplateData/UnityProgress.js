@@ -6,48 +6,28 @@ function UnityProgress (dom) {
 	var parent = dom.parentNode;
 
 	var background = document.createElement("div");
-	background.style.background = Module["backgroundColor"] ? Module["backgroundColor"] : "#4D4D4D";
+	background.style.background = "#4D4D4D";
 	background.style.position = "absolute";
-	background.style.overflow = "hidden";
 	parent.appendChild(background);
 	this.background = background;
 
-	if (Module["backgroundImage"])
-	{
-		var backgroundImg = document.createElement("img");
-		backgroundImg.src = Module["backgroundImage"]; 
-		backgroundImg.style.position = "absolute";
-		backgroundImg.style.width = "100%";
-		backgroundImg.style.height = "auto";
-		backgroundImg.style.top = "50%";
-		backgroundImg.style.transform = "translate(0, -50%)";
-		background.appendChild(backgroundImg);
-	}
-
 	var logoImage = document.createElement("img");
-	var splashStyle = Module["splashStyle"] ? Module["splashStyle"] : "Light";
-	logoImage.src = "TemplateData/Logo." + splashStyle + ".png"; 
+	logoImage.src = "TemplateData/progresslogo.png"; 
 	logoImage.style.position = "absolute";
 	parent.appendChild(logoImage);
 	this.logoImage = logoImage;
 
 	var progressFrame = document.createElement("img");
-	progressFrame.src = "TemplateData/ProgressFrame." + splashStyle + ".png"; 
+	progressFrame.src = "TemplateData/loadingbar.png"; 
 	progressFrame.style.position = "absolute";
 	parent.appendChild(progressFrame);
 	this.progressFrame = progressFrame;
 
-	var progressBar = document.createElement("div");
+	var progressBar = document.createElement("img");
+	progressBar.src = "TemplateData/fullbar.png"; 
 	progressBar.style.position = "absolute";
-	progressBar.style.overflow = "hidden";
 	parent.appendChild(progressBar);
 	this.progressBar = progressBar;
-
-	var progressBarImg = document.createElement("img");
-	progressBarImg.src = "TemplateData/ProgressBar." + splashStyle + ".png"; 
-	progressBarImg.style.position = "absolute";
-	progressBar.appendChild(progressBarImg);
-	this.progressBarImg = progressBarImg;
 
 	var messageArea = document.createElement("p");
 	messageArea.style.position = "absolute";
@@ -101,15 +81,10 @@ function UnityProgress (dom) {
 		this.progressFrame.width = progressFrameImg.width;
 		this.progressFrame.height = progressFrameImg.height;
 
-		this.progressBarImg.style.top = '0px';
-		this.progressBarImg.style.left = '0px';
-		this.progressBarImg.width = progressFrameImg.width;
-		this.progressBarImg.height = progressFrameImg.height;
-
 		this.progressBar.style.top = this.progressFrame.style.top;
 		this.progressBar.style.left = this.progressFrame.style.left;
-		this.progressBar.style.width = (progressFrameImg.width * this.progress) + 'px';
-		this.progressBar.style.height = progressFrameImg.height + 'px';
+		this.progressBar.width = progressFrameImg.width * Math.min(this.progress, 1);
+		this.progressBar.height = progressFrameImg.height;
 
 		this.messageArea.style.top = this.progressFrame.style.top;
 		this.messageArea.style.left = 0;
